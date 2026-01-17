@@ -1,3 +1,4 @@
+from flask import flash
 from flask import redirect, url_for
 from flask import send_from_directory
 from flask import Flask, render_template, request
@@ -9,6 +10,8 @@ from utils.preprocess import preprocess_image
 
 
 app = Flask(__name__)
+app.secret_key = "deepfake-secret-key"
+
 
 # Configuration
 UPLOAD_FOLDER = "uploads"
@@ -74,17 +77,13 @@ def uploaded_file(filename):
 
 @app.route("/delete/<filename>", methods=["POST"])
 def delete_image(filename):
-    try:
-        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        if os.path.exists(filepath):
-            os.remove(filepath)
-            print(f"Deleted file: {filepath}")
-        else:
-            print(f"File not found: {filepath}")
-    except Exception as e:
-        print("Delete error:", e)
-
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        flash("Image deleted from database successfully")
     return redirect(url_for("index"))
+
+
 
 
 

@@ -13,6 +13,25 @@
 
 <body>
 
+{% if get_flashed_messages() %}
+<div id="toast" class="toast-success">
+    {{ get_flashed_messages()[0] }}
+</div>
+
+<script>
+    setTimeout(() => {
+        const toast = document.getElementById("toast");
+        if (toast) {
+            toast.style.opacity = "0";
+            setTimeout(() => toast.remove(), 500);
+        }
+    }, 3000);
+</script>
+{% endif %}
+
+
+
+
     <div class="container">
         <h1>Deepfake Image Detection</h1>
         <p class="subtitle">Upload an image to analyze whether it is REAL or FAKE</p>
