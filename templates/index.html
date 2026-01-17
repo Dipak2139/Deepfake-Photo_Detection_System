@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Deepfake Image Detection</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Deepfake Image Detection</h1>
+        <p class="subtitle">Upload an image to analyze whether it is REAL or FAKE</p>
+
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+
+            <!-- Custom File Upload -->
+            <label for="image-upload" class="custom-file-upload">
+                Choose Image
+            </label>
+            <input id="image-upload" type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+            <p id="file-name" class="file-name">No file chosen</p>
+
+            <!-- Image Preview -->
+            <div id="preview-container" class="preview hidden">
+                <img id="preview-image" />
+            </div>
+
+            <button type="submit">Analyze Image</button>
+        </form>
+
+        <!-- Loading Animation -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Analyzing image...</p>
+        </div>
+
+        {% if result %}
+        <div class="result-section animate">
+
+            {% if image_url %}
+            <div class="result-image">
+                <img src="{{ image_url }}" alt="Uploaded Image">
+            </div>
+
+            <div class="result-box
+                {% if 'FAKE' in result %} fake {% else %} real {% endif %}">
+                {{ result }}
+            </div>
+
+            <!-- DELETE BUTTON (appears only after result) -->
+            <form method="POST" action="{{ url_for('delete_image', filename=image_url.split('/')[-1]) }}">
+                <button type="submit" class="delete-btn">
+                    Delete Image
+                </button>
+            </form>
+
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+
+
+        <footer>
+            Developed by <span>Dipak Das</span>
+        </footer>
+    </div>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").classList.remove("hidden");
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("file-name").innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function () {
+                    document.getElementById("preview-image").src = reader.result;
+                    document.getElementById("preview-container").classList.remove("hidden");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
