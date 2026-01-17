@@ -3,8 +3,7 @@
 A deep learning–based web application that detects whether an uploaded face image is **REAL** or **FAKE (Deepfake)** using a Convolutional Neural Network (CNN) and a Flask web interface.
 
 This project is developed as both:
-- 🎓 **MCA Final Year Project**
-- 💻 **Personal AI / ML Portfolio Project**
+- 💻 **Personal AI / ML Project**
 
 ---
 
