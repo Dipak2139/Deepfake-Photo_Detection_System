@@ -9,6 +9,7 @@ from utils.preprocess import preprocess_image
 
 
 
+
 app = Flask(__name__)
 app.secret_key = "deepfake-secret-key"
 
@@ -19,6 +20,9 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 MODEL_PATH = "model/deepfake_model.h5"
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+
 
 # Ensure upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
