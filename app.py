@@ -30,7 +30,15 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Load model once
 MODEL_PATH = "model/deepfake_model"
 
-model = tf.keras.models.load_model(MODEL_PATH)
+model = None
+
+def get_model():
+    global model
+    if model is None:
+        model = tf.keras.models.load_model(MODEL_PATH)
+    return model
+model = get_model()
+
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -90,3 +98,7 @@ def delete_image(filename):
     return redirect(url_for("index"))
 
 
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
