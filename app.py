@@ -28,6 +28,8 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Load model once
+MODEL_PATH = "model/deepfake_model"
+
 model = tf.keras.models.load_model(MODEL_PATH)
 
 def allowed_file(filename):

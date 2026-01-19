@@ -65,6 +65,10 @@ model.fit(
 )
 
 # Save model
-model.save("model/deepfake_model.h5")
+model.save(
+    "model/deepfake_model",
+    save_format="tf"
+)
+
 
 print("Model training complete. Saved as deepfake_model.h5")
