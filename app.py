@@ -4,7 +4,18 @@ from flask import send_from_directory
 from flask import Flask, render_template, request
 import os
 from werkzeug.utils import secure_filename
-import tensorflow as tf
+import numpy as np
+import tensorflow.lite as tflite
+
+
+TFLITE_MODEL_PATH = "model/deepfake_model.tflite"
+
+interpreter = tflite.Interpreter(model_path=TFLITE_MODEL_PATH)
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
 from utils.preprocess import preprocess_image
 
 
@@ -28,16 +39,6 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Load model once
-MODEL_PATH = "model/deepfake_model"
-
-model = None
-
-def get_model():
-    global model
-    if model is None:
-        model = tf.keras.models.load_model(MODEL_PATH)
-    return model
-model = get_model()
 
 
 def allowed_file(filename):
@@ -67,7 +68,10 @@ def index():
 
             try:
                 image = preprocess_image(filepath)
-                prediction = model.predict(image)[0][0]
+                interpreter.set_tensor(input_details[0]['index'], image.astype(np.float32))
+                interpreter.invoke()
+                prediction = interpreter.get_tensor(output_details[0]['index'])[0][0]
+
                 confidence = prediction * 100
 
                 # ✅ Balanced threshold
