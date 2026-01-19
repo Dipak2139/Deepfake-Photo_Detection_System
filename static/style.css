@@ -262,3 +262,36 @@ footer span {
 .privacy-tooltip:hover .tooltip-text {
     visibility: visible;
 }
+
+/* ---------- DD LOGO ---------- */
+
+.dd-logo {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .dd-logo {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+    border-radius: 10px;
+    top: 14px;
+    left: 14px;
+  }
+}

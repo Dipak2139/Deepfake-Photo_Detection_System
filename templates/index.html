@@ -12,23 +12,24 @@
 </head>
 
 <body>
- 
+    <div class="dd-logo">DD</div>
 
-{% if get_flashed_messages() %}
-<div id="toast" class="toast-success">
-    {{ get_flashed_messages()[0] }}
-</div>
 
-<script>
-    setTimeout(() => {
-        const toast = document.getElementById("toast");
-        if (toast) {
-            toast.style.opacity = "0";
-            setTimeout(() => toast.remove(), 500);
-        }
-    }, 3000);
-</script>
-{% endif %}
+    {% if get_flashed_messages() %}
+    <div id="toast" class="toast-success">
+        {{ get_flashed_messages()[0] }}
+    </div>
+
+    <script>
+        setTimeout(() => {
+            const toast = document.getElementById("toast");
+            if (toast) {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 500);
+            }
+        }, 3000);
+    </script>
+    {% endif %}
 
 
 
@@ -86,12 +87,12 @@
         {% endif %}
 
 
-    <p class="privacy-tooltip">
-        🔒 Privacy
-        <span class="tooltip-text">
-            Uploaded images are processed temporarily for detection and are not stored on the server.
-        </span>
-    </p>
+        <p class="privacy-tooltip">
+            🔒 Privacy
+            <span class="tooltip-text">
+                Uploaded images are processed temporarily for detection and are not stored on the server.
+            </span>
+        </p>
 
         <footer>
             Developed by <span>Dipak Das</span>
